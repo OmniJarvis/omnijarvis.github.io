@@ -124,8 +124,6 @@
         <div class="container is-max-desktop">
           <div class="columns is-centered">
             <div class="column has-text-centered">
-              <!-- <h1 class="title is-1 publication-title"><img id="logo" width="10%" src="./static/images/logo.png"> RAT</h1> -->
-              <!-- <h1 class="title is-2 publication-title">Retrieval Augmented Thoughts Elicit Context-Aware Reasoning in Long-Horizon Generation</h1> -->
               <h1 class="title is-1 publication-title">OmniJARVIS: Unified Vision-Language-Action Tokenization Enables Open-World Instruction Following Agents</h1>
               <div class="is-size-5 publication-authors">
                 <!-- <span class="author-block">
@@ -138,7 +136,7 @@
                   <a href="https://phython96.github.io/" target="_blank">Shaofei Cai</a><sup>1</sup>,
                 </span>
                 <span class="author-block">
-                  <a href="http://craftjarvis.github.io/" target="_blank">Zhancun Mu</a><sup>1</sup>,
+                  <a href="https://zhancunmu.owlstown.net/" target="_blank">Zhancun Mu</a><sup>1</sup>,
                 </span>
                 <span class="author-block">
                   <a href="https://linhaowei1.github.io/" target="_blank">Haowei Lin</a><sup>1</sup>,
@@ -170,7 +168,7 @@
                 <span class="author-block"><sup>3</sup>UCLA</span>
               </div>
 
-              <div class="is-size-4 publication-authors">
+              <div class="is-size-5 publication-authors">
                 <span class="conference-block">
                   <a href="https://craftjarvis.org/" target="_blank">Team CraftJarvis</a>
                 </span>
@@ -209,7 +207,7 @@
                   </span> -->
                   <!-- Code Link. -->
                   <span class="link-block">
-                    <a href="https://github.com/linhaowei1/Fine-tuning-Scaling-Law" target="_blank"
+                    <a href="https://github.com/CraftJarvis/OmniJarvis" target="_blank"
                        class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                           <i class="fab fa-github"></i>
@@ -222,18 +220,18 @@
                     <a href="https://huggingface.co/spaces/zhwang4ai/" target="_blank"
                        class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
-                          <i class="far fa-images"></i>
+                          <i class="fas fa-gamepad"></i>
                       </span>
-                      <span>Models</span>
+                      <span>Models (Coming Soon)</span>
                       </a>
                   </span> -->
                   <span class="link-block">
-                    <a href="https://huggingface.co/spaces/zhwang4ai/" target="_blank"
+                    <a href="https://huggingface.co/datasets/zhwang4ai/Minecraft-EQA-300k" target="_blank"
                        class="external-link button is-normal is-rounded is-dark">
                       <span class="icon">
                           <i class="far fa-images"></i>
                       </span>
-                      <span>Dataset</span>
+                      <span>Dataset (Coming Soon)</span>
                       </a>
                   </span>
                 </div>
@@ -253,7 +251,7 @@
             <h2 class="title is-3">Abstract</h2>
             <div class="content has-text-justified">
               <p>
-                We presents OmniJARVIS, a novel Vision-Language-Action (VLA) model for open-world instructionfollowing agents in open-world Minecraft. Compared to prior works that either emit textual goals to separate controllers or produce the control command directly, OmniJARVIS seeks a different path to ensure both strong reasoning and efficient decision-making capabilities via unified tokenization of multimodal interaction data. First, we introduce a self-supervised approach to learn a behavior encoder that produces discretized tokens for behavior trajectories $\tau$ = {$o_0$, $a_0$, $\dots$} and an imitation learning (IL) policy decoder conditioned on these tokens. These additional behavior tokens will be augmented to the vocabulary of pretrained Multimodal Language Models (MLMs). With this encoder, we then pack long-term multimodal interactions involving task instructions, memories, thoughts, observations, textual responses, behavior trajectories, etc. into unified token sequences and model them with autoregressive transformers. Thanks to the semantically meaningful behavior tokens, the resulting VLA model, OmniJARVIS, can reason (by producing chain-of-thoughts), plan, answer questions, and act (by producing behavior tokens for the IL policy decoder). OmniJARVIS demonstrates excellent performances on a comprehensive collection of atomic, programmatic, and open-ended tasks in open-world Minecraft. Our analysis further unveils the crucial design principles in interaction data formation, unified tokenization, and its scaling potentials.
+                We present OmniJARVIS, a novel Vision-Language-Action (VLA) model for open-world instructionfollowing agents in open-world Minecraft. Compared to prior works that either emit textual goals to separate controllers or produce the control command directly, OmniJARVIS seeks a different path to ensure both strong reasoning and efficient decision-making capabilities via unified tokenization of multimodal interaction data. First, we introduce a self-supervised approach to learn a behavior encoder that produces discretized tokens for behavior trajectories $\tau$ = {$o_0$, $a_0$, $\dots$} and an imitation learning (IL) policy decoder conditioned on these tokens. These additional behavior tokens will be augmented to the vocabulary of pretrained Multimodal Language Models (MLMs). With this encoder, we then pack long-term multimodal interactions involving task instructions, memories, thoughts, observations, textual responses, behavior trajectories, etc. into unified token sequences and model them with autoregressive transformers. Thanks to the semantically meaningful behavior tokens, the resulting VLA model, OmniJARVIS, can reason (by producing chain-of-thoughts), plan, answer questions, and act (by producing behavior tokens for the IL policy decoder). OmniJARVIS demonstrates excellent performances on a comprehensive collection of atomic, programmatic, and open-ended tasks in open-world Minecraft. Our analysis further unveils the crucial design principles in interaction data formation, unified tokenization, and its scaling potentials.
               </p>
             </div>
           </div>
@@ -273,6 +271,174 @@
         <!--/ Paper video. -->
       </div>
     </section>
+
+    <section class="section" id="model" style="background-color:#efeff081">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Tokenizer and Model Structure of OmniJARVIS</h2>
+        </div>
+      </div>
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <!-- <font color="#224baf" size=4><b> -->
+            <div class="content has-text-justified">
+              <p>
+                <centering>
+                  <div style="text-align: center;">
+                    <img id="teaser" width="90%" src="./static/img/behavior_tokenizer.png">     
+                  </div>
+                  Self-supervised learning for behavior tokenizer of OmniJARVIS. We modify the VAE-based self-supervised learning of behavior trajectories in GROOT to train the behavior tokenizer and de-tokenizer in OmniJARVIS. Specifically, we adopt the auto-encoding objective but replace the Gaussian latent with a discrete representation based on Finite Scalar Quantizer. The encoder will then be used as the behavior tokenizer to produce discrete tokens from the actions (behavior trajectories) in multimodal interaction data, while the behavior tokens emitted by OmniJARVIS will be sent to the policy
+                decoder to perform motor control. <br>
+                  <div style="text-align: center;">
+                    <img id="teaser" width="100%" src="./static/img/omnijarvis.png">     
+                  </div>
+                </centering>
+                Architecture and Inference of OmniJARVIS. The main body of OmniJARVIS is a multimodal language model (MLM) augmented with additional behavior tokens. Given a task instruction, initial memory, and observation, OmniJARVIS will iteratively perform chain-of-thought reasoning and produce behavior tokens as a means of control via the decoder policy (behavior de-tokenizer). Every 128 steps, OmniJARVIS is forced to reason again and produce new behavior tokens with the latest observation. (Not shown above) OmniJARVIS can also make textual responses, e.g. answering questions.
+              </p>
+            </div>
+            <!-- </b></font> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="Results">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Vision-Language-Action Model Comparisons</h2>
+        </div>
+      </div>
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <!-- <font color="#224baf" size=4><b> -->
+            <div class="content has-text-justified">
+              <p>
+                <centering>
+                  <div style="text-align: center;">
+                    <img id="teaser" width="100%" src="./static/img/vla_comparisons.png">     
+                  </div>
+                </centering>
+                (a) depicts a model where upon receiving a language instruction, actions are directly output based on the environmental state, facilitating immediate interaction with the environment at a unified frequency. Smaller models with less than 1B parameters like VPT maintain higher frequencies (>20Hz), though their capability for complex reasoning tasks is limited. Larger models with >7B parameters such as RT-2, offer enhanced performance but operate at significantly reduced frequencies (2-3Hz). <br>
+                (b) illustrates a common approach utilizing large vision-language models for planning, subsequently outputting language goals like PaLM-E and DEPS. A language-conditioned policy then translates these language goals into actions at a real-time interaction rate of 20Hz, with high-level models re-planning at less than 1Hz. This hierarchical structure balances interaction frequency and performance, while it requires language as an intermediary and additional language labels. The training process of high-level vision-language models and language-conditioned policies are separate, thus performing poorly on tasks that can not be easily connected by language.  <br>
+                (c) (ours) mirrors the hierarchical structure of (b) but differentiates by employing a self-supervised encoder-decoder policy and FSQ quantization as a behavior tokenizer. The upper-level vision-language models produce self-supervised behavior tokens, which are then conditioned by a policy decoder to output actions, facilitating environment interaction. The behavior tokens are injected into the training corpus of vision-language-action models, which enables end-to-end inference. This approach also eliminates the need for external language supervision and scales efficiently. 
+              </p>
+            </div>
+            <!-- </b></font> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="Results" style="background-color:#efeff081">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Capabilities in Open-world Minecraft</h2>
+        </div>
+      </div>
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-four-fifths">
+            <!-- <font color="#224baf" size=4><b> -->
+            <div class="content has-text-justified">
+              <p>
+                <centering>
+                  <div style="text-align: center;">
+                    <img id="teaser" width="100%" src="./static/img/results.png">     
+                  </div>
+                </centering>
+                Evaluation results of different agents on atom tasks, programmatic tasks and creative tasks (question-answering and instruction-following). We distinguish different methods through action tokenizer, where STEVE-I and GROOT directly output actions, ReAct and DEPS output language as goals, and then use STEVE-I to output actions. OmniJARVIS uses the self-supervised discrete action tokenizer.
+              </p>
+            </div>
+            <!-- </b></font> -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="examples">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-five-fifths">
+          <h2 class="title is-3">Interaction Examples</h2>
+        </div>
+      </div>
+      <div class="container mt-5">
+        <div class="form-row" style="justify-content: flex-end;">
+          <div class="form-group col-md-1">
+            <div class="col-md-2" style="width: 100%"><label>&nbsp;</label></div>
+            <div class="btn-group" role="group" aria-label="Left and Right Controller"
+              style="width: 100%;align-items: flex-end;justify-content: center;flex-direction: row;display: flex;">
+              <button type="button" class="form-control btn btn-primary" id="prev-question"><i class="material-icons">keyboard_arrow_left</i></button>
+              <button type="button" class="form-control btn btn-primary" id="next-question"><i class="material-icons">keyboard_arrow_right</i></button>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+          <div class="card mb-4" style="width: 100%; display: flex; align-items: center;">
+            <div class="card-body" id="selected-question" style="display: flex; height: 80vh;">
+              <div class="chat-history">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    
+    <section class="section" id="related_projects" style="background-color:#efeff081">
+      <div class="row justify-content-md-center mt-4">
+        <div class="col-md-10 col-lg-8">
+            <h4>Related Projects</h4>
+            <p>Check out some of our related projects below! </p>
+
+            <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
+              <tr>
+                <td style="padding:20px;width:40%;vertical-align:middle">
+                    <img src="static/img/2311.05997.png" alt="JARVIS1" width="360" style="border-style: none">
+                </td>
+                <td width="60%" valign="middle">
+                    <a href="https://craftjarvis.github.io/JARVIS-1/" target="_blank">
+                    <papertitle>JARVIS-1: Open-world Multi-task Agents with Memory-Augmented Multimodal Language Models</papertitle>
+                    </a>
+                    <p> 
+                      JARVIS-1 is developed on top of pre-trained multimodal language models, which map visual observations and textual instructions to plans. The plans will be ultimately dispatched to the goal-conditioned controllers. We outfit JARVIS-1 with a multimodal memory, which facilitates planning using both pre-trained knowledge and its actual game survival experiences.  
+                    </p>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:20px;width:40%;vertical-align:middle">
+                    <img src="static/img/2310.08235.png" alt="GROOT" width="360" style="border-style: none">
+                </td>
+                <td width="60%" valign="middle">
+                    <a href="https://craftjarvis-groot.github.io/" target="_blank">
+                    <papertitle>GROOT: Learning to Follow Instructions by Watching Gameplay Videos</papertitle>
+                    </a>
+                    <p> 
+                        This work proposes to follow reference videos as instructions, which offer expressive goal specifications while eliminating the need for expensive text-gameplay annotations, and implements the agent GROOT in a simple yet effective encoder-decoder architecture based on causal transformers.  
+                    </p>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:20px;width:40%;vertical-align:middle">
+                    <img src="static/img/2302.01560.png" alt="DEPS" width="360" style="border-style: none">
+                </td>
+                <td width="60%" valign="middle">
+                    <a href="https://arxiv.org/abs/2302.01560/" target="_blank">
+                    <papertitle>Describe, Explain, Plan and Select: Interactive Planning with Large Language Models Enables Open-World Multi-Task Agents</papertitle>
+                    </a>
+                    <p> 
+                        DEPS is an interactive planning approach based on Large Language Models (LLMs) for open-ended multi-task agents. It helps with better error correction from the feedback during the long-haul planning, while also bringing the sense of proximity via goal Selector, a learnable module that ranks parallel sub-goals based on the estimated steps of completion and improves the original plan accordingly.  
+                    </p>
+                    <br>
+                </td>
+            </tr>
+        </tbody></table>
+
+        </div>
+    </div>
+  </section>
     
     <section class="section" id="BibTeX">
       <div class="container is-max-desktop content">
@@ -285,6 +451,174 @@
     }</code></pre>
       </div>
     </section>
+
+    <script>
+      // Handle message showing
+      function createChatRow(sender, text, imageSrc) {
+        var article = document.createElement("article");
+        article.className = "media"
+
+        var figure = document.createElement("figure");
+        figure.className = "media-left";
+
+        var span = document.createElement("span");
+        span.className = "icon is-large";
+
+        var icon = document.createElement("i");
+        var img = document.createElement("img");
+
+        if (sender === "User") {
+          img.src = "static/images/user.png"
+        }
+        else if (sender === "OmniJARVIS") {
+          img.src = "static/images/agent.png"
+        }
+        else if (sender === "Environment") {
+          img.src = "static/images/env.png"
+        }
+        else {
+          img.src = "static/images/favicon.svg"
+        }
+        icon.appendChild(img);
+
+        var media = document.createElement("div");
+        media.className = "media-content";
+
+        var content = document.createElement("div");
+        content.className = "content";
+
+        var para = document.createElement("p");
+
+        // wrap text in pre tag to preserve whitespace and line breaks
+        var pre_text = document.createElement("pre");
+        pre_text.style = "background-color: white; font-size: 18px; font-family: Arial; padding: 0; margin: 0; white-space: pre-wrap; word-wrap: break-word;";
+        var paraText = document.createTextNode(text);
+        pre_text.appendChild(paraText);
+
+        var strong = document.createElement("strong");
+        strong.innerHTML = sender;
+        var br = document.createElement("br");
+
+        para.appendChild(strong);
+        para.appendChild(br);
+        para.appendChild(pre_text);
+
+        if (imageSrc) {
+          var img = document.createElement("img");
+          img.src = imageSrc;
+          img.style = "max-width: 100%; max-height: 300px;"; // Adjust the style as needed
+          para.appendChild(img);
+        }
+
+        content.appendChild(para);
+        media.appendChild(content);
+        span.appendChild(icon);
+        figure.appendChild(span);
+        if (sender !== "Description") {
+          article.appendChild(figure);
+        };
+        article.appendChild(media);
+        return article;
+      }
+
+      function addMessageToChatHistory(sender, message, imageSrc) {
+        const chatHistory = document.querySelector('.chat-history');
+        const chatRow = createChatRow(sender, message, imageSrc);
+        chatHistory.appendChild(chatRow);
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+      }
+
+      function clearChatHistory() {
+        const chatHistory = document.querySelector('.chat-history');
+        chatHistory.innerHTML = "";
+      }
+
+      const conversations = [
+      {
+        "description": "Instruction-Following Example 1",
+        "turns": [
+          ["User", "TASK: Mine stone with an iron pickaxe, gather cobblestone, then switch to gravel, mining it with a wooden shovel to collect some. Return to mining stone with the iron pickaxe, place torches for visibility, then proceed to mine iron ore as well. The agent collects items along the way, including gravel and iron ore while constantly gathering cobblestone throughout the process."],
+          ["OmniJARVIS", "MEMORY: I have mine 13 stone blocks and 1 gravel block."],
+          ["Environment", "INVENTORY: : iron_pickaxe: 1, wooden_shovel: 1, wooden_axe: 1, cobblestone: 156, crafting_table: 1, andesite: 23, iron_ore: 4, coal: 31, birch_log: 5, birch_planks: 47, furnace: 1, gravel: 1, granite: 12, diorite: 28, wooden_pickaxe: 1, stone_pickaxe: 1, dirt: 14, stick: 43"],
+          ["Environment", "OBSERVATION:", "./static/img/observations/step-270.jpg"],
+          ["OmniJARVIS", "CAPTION: The image captures a moment in the video game Minecraft. The player's character is standing at the entrance of a cave, which is characterized by its dark gray walls and ceiling. The floor of the cave is a contrasting light gray, with a few small rocks scattered about. In the bottom left corner of the screen, the player's health and hunger bars are visible, indicating the status of the character. The top right corner of the screen displays the player's inventory, showcasing a variety of items including a pickaxe, a sword, and some food. The most striking feature of the image is the text Iron Pickaxe that appears in the bottom right corner of the screen. This suggests that the player might be using an iron pickaxe, a common tool in the game for mining. The precise location of the objects and their relative positions contribute to the immersive gaming experience."
+          ],
+          ["OmniJARVIS", "THOUGHT: The player needs to mine iron ore with an iron pickaxe to progress towards the task. Recent memory indicates a focus on using the iron pickaxe for various mining activities. Since iron ore is a key component in the task's objectives and the player already possesses the required tool, the next step should be to mine the iron ore. So the behavior should be use_item:iron_pickaxe, mine_block:iron_ore."],
+          ["OmniJARVIS", "TOKEN[BEHAVIOR-12372]"],
+          ["Environment", "INVENTORY, OBSERVATION, ..."]
+        ]
+      },
+      {
+        "description": "Instruction-Following Example 2",
+        "turns": [
+          ["User", "TASK: 1. Smelt iron ingots in a furnace. 2. Craft an iron pickaxe from iron ingots and sticks. 3. Mine diamond ore blocks using the iron pickaxe, collecting diamonds. 4. Mine redstone ore, collecting redstone. 5. Mine diorite blocks. 6.Craft a diamond pickaxe using diamonds and sticks. 7. Craft additional diamond pickaxes using cobblestone and the previous diamond pickaxe."],
+          ["OmniJARVIS", "MEMORY: I have smelt 3 iron ingots."],
+          ["Environment", "INVENTORY: oak_log: 9, andesite: 3, dirt: 6, oak_planks: 8, iron_ingot: 3, cobblestone: 124, stone_axe: 1, stone_pickaxe:1, granite: 15, wheat_seeds: 1, diorite: 9, stick: 7"],
+          ["Environment", "OBSERVATION:", "./static/img/observations/step-70.jpg"],
+          ["OmniJARVIS", "CAPTION: The image captures a scene from the video game Minecraft. In the center of the frame, a player's hand is seen holding a torch, which is ablaze with orange and yellow flames. The torch is being used to ignite a pile of wooden planks that are stacked haphazardly on top of each other. The planks are brown and appear to be made of wood. The player's health and hunger bars are visible in the bottom left corner of the screen, indicating the player's status in the game. In the bottom right corner, the player's inventory is displayed, showcasing the tools at their disposal. The background of the image reveals a cave-like structure, characterized by stalactites hanging from the ceiling and stalagmites rising from the floor. The walls of the cave are made of gray stone, providing a stark contrast to the wooden planks. Overall, the image provides a snapshot of a moment in the game, capturing the player's interaction with the environment and the tools at their disposal."
+          ],
+          ["OmniJARVIS", "THOUGHT: The player holds enough iron ingots in their inventory, fulfilling the task requirement to craft iron ingots in a furnace. However, to proceed with the subsequent tasks which involve mining diamond ore and redstone ore, acquiring an iron pickaxe is crucial. Considering the current inventory, the player possesses the necessary materials to craft an iron pickaxe - iron ingots and sticks. Crafting the iron pickaxe now will enable the player to move efficiently towards their goal of mining valuable resources like diamonds and redstone. Therefore, the immediate action should be to craft an iron pickaxe. So the behavior should be craft_item:iron_pickaxe."],
+          ["OmniJARVIS", "TOKEN[BEHAVIOR-1375]"],
+          ["Environment", "INVENTORY, OBSERVATION, ..."]
+        ]
+      },
+      {
+        "description": "Reasoning Example 1",
+        "turns": [
+          ["User", "QUESTION: Can stone pickaxe be used to mine diamonds?"],
+          ["OmniJARVIS", "ANSWER: No, a stone pickaxe cannot be used to mine diamonds in Minecraft. An iron pickaxe or better is required to mine diamonds."],
+          ["USER", "QUESTION: Can golden pickaxe be used to mine diamonds?"],
+          ["OmniJARVIS", "ANSWER: In Minecraft, you cannot use a golden pickaxe to mine diamonds. Diamonds are one of the hardest materials in the game and require an iron pickaxe or better to mine. Using a gold pickaxe on diamond ore blocks will cause them to break, but you won't receive any diamonds as a drop. You'll just get the diamond ore block itself. To successfully mine diamonds, you should use an iron, diamond, or netherite pickaxe. These pickaxes have the required hardness to break diamond ore blocks and yield diamonds when mined."],
+        ]
+      },
+      {
+        "description": "Planning Example 1",
+        "turns": [
+          ["User", "QUESTION: Give you nothing in the inventory, how to obtain diamond pickaxe from empty inventory, generate a step-bystep plan, start from punching trees, and describe every step in detail."],
+          ["OmniJARVIS", "ANSWER: Obtaining a diamond pickaxe in Minecraft involves several steps, starting from punching trees and eventually progressing to mining diamonds. Here's a step-by-step plan to obtain a diamond pickaxe from an empty inventory:\n**Step 1: Punching Trees**\n1. **Gather Wood:** Start by punching trees to collect wood blocks. You'll need at least 3 logs to proceed.\n **Step 2: Crafting Basic Tools**\n 2. **Craft Wooden Planks:** Open your inventory and turn the logs into wooden planks by placing them in the crafting grid (4 wooden logs -> 16 wooden planks).\n 3. **Craft Crafting Table:** Use the wooden planks to craft a crafting table. Place 4 wooden planks in the 2x2 crafting grid to create it.\n 4. **Craft Wooden Pickaxe:** With the crafting table, craft a wooden pickaxe using wooden planks and sticks. Place 3 wooden planks in the top row and 2 sticks in the middle row.\n **Step 3: Finding Stone**\n 5. **Mine Stone:** Use your wooden pickaxe to mine stone blocks. You'll need at least 3 stone blocks to proceed.\n **Step 4: Upgrading Tools**\n 6. **Craft Furnace:** Use the crafting table to create a furnace using 8 pieces of cobblestone. Place the cobblestone in all squares of the crafting grid except the center square.\n 7. **Smelt Cobblestone:** Use the furnace to smelt the cobblestone into smooth stone. Place the cobblestone in the top slot of the furnace and fuel (wooden planks, sticks, etc.) in the bottom slot. Collect the smooth stone when it's ready.\n **Step 5: Crafting a Stone Pickaxe**\n 8. **Craft Stone Pickaxe:** With the smooth stone, craft a stone pickaxe using cobblestone and sticks. Place 3 cobblestones in the top row and 2 sticks in the middle row.\n **Step 6: Upgrade to Iron Pickaxe**\n 9. **Find Iron Ore:** Find iron ore blocks underground (usually at lower depths) and mine them using your stone pickaxe. You'll need at least 3 iron ore blocks.\n 10. **Smelt Iron Ore:** Place your iron ore in the top slot of the furnace and use wooden planks as fuel in the bottom slot. This will smelt the iron ore into iron ingots.\n 11. **Craft Iron Pickaxe:** With the iron ingots, craft a iron pickaxe using iron ingots and sticks. Place 3 iron ingots in the top row and 2 sticks in the middle column.\n **Step 7: Mining Diamonds**\n 12. **Find Diamonds:** Use your iron pickaxe to mine for diamonds. Diamonds are found deep underground, usually between levels 5 to 12. They appear as blue, sparkly ore blocks.\n **Step 8: Crafting a Diamond Pickaxe**\n 13. **Craft Diamond Pickaxe:** Once you have collected at least 3 diamonds, craft a diamond pickaxe using diamonds and sticks. Place 3 diamonds in the top row and 2 sticks in the middle row.\n **Step 9: Using the Diamond Pickaxe**\n 14. **Mine Ores:** The diamond pickaxe is more durable and efficient than lower-tier pickaxes. Use it to mine a variety of ores, including iron, gold, redstone, and more. And that's it! You've successfully obtained a diamond pickaxe from an empty inventory by following these steps.\n Remember that Minecraft's world generation and mechanics might vary slightly depending on the version you're playing, so adapt the plan as needed"],
+        ]
+      },
+      {
+        "description": "Knowledge Example 1",
+        "turns": [
+          ["User", "QUESTION: How to craft diamond pickaxe step-by-step, describe every step in details."],
+          ["OmniJARVIS", "ANSWER: To craft a diamond pickaxe in Minecraft, you will need to follow these steps:\n 1. **Gather Resources:**\n- Start by gathering the necessary resources to craft a diamond pickaxe. You'll need three diamonds and two sticks.\n- Diamonds can be found deep underground, typically between levels 1 to 15 in the Overworld. You'll need an iron pickaxe or better to mine diamonds. Use this iron pickaxe to mine the diamond ore blocks.\n 2. **Crafting Sticks:**\n- If you haven't already, craft sticks from wooden planks. Open your crafting table and place two wooden planks vertically to create four sticks.\n3. **Crafting the Diamond Pickaxe:**\n- Open your crafting table, which consists of a 3x3 crafting grid.\n- Place the three diamonds in the top row.\n- Place two sticks in the middle row, one in the center slot and one in the slot just below it.\n- Your crafting grid should now look like this:\n[D][D][D]\n[ ][S][ ]\n[ ][S][ ]\n- [D] represents a diamond.\n- [S] represents a stick.\n- Once you've placed the items in the correct pattern, you'll see a diamond pickaxe appear in the result box of the crafting table.\n 4. **Collect the Diamond Pickaxe:**\n- Click or drag the diamond pickaxe from the crafting table's result box into your inventory.\nCongratulations! You now have a diamond pickaxe in your inventory. Diamond pickaxes are extremely valuable in Minecraft because they can mine most blocks faster than other pickaxes and are required to mine certain valuable resources like obsidian. Be sure to use it wisely and take care of it, as it's a valuable tool in the game."],
+          
+        ]
+      },
+      ];
+
+      let currentIndex = 0;
+
+      function update_dialog_demo() {
+        clearChatHistory();
+
+        for (let i = 0; i < conversations[currentIndex].turns.length; i++) {
+          if (conversations[currentIndex].turns[i].length == 2) {
+            addMessageToChatHistory(conversations[currentIndex].turns[i][0], conversations[currentIndex].turns[i][1]);
+          }
+          else {
+            addMessageToChatHistory(conversations[currentIndex].turns[i][0], conversations[currentIndex].turns[i][1], conversations[currentIndex].turns[i][2]);
+          }
+        }
+
+        document.querySelector('.chat-history').scrollTop = 0;
+      }
+
+      // Initialize the displayed image
+      update_dialog_demo();
+
+      // Event listeners for the buttons
+      document.getElementById('prev-question').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + conversations.length) % conversations.length;
+        update_dialog_demo();
+      });
+
+      document.getElementById('next-question').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % conversations.length;
+        update_dialog_demo();
+      });
+    </script>
 
     <footer class="footer">
       <div class="container">
